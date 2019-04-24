@@ -1,0 +1,78 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.hamami.hamamimusicapp"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
+        }
+    }
+    // used by Room, to test migrations
+    sourceSets {
+        androidTest.assets.srcDirs +=
+                files("$projectDir/schemas".toString())
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    buildToolsVersion '28.0.3'
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    // design
+    implementation 'com.android.support:design:28.0.0'
+    // ExoPlayer
+    implementation 'com.google.android.exoplayer:exoplayer:2.8.4'
+    // 2.9.0 has min sdk 26
+    def glideVersion = "4.8.0"
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
+    // Room for sql data base
+    implementation 'android.arch.persistence.room:runtime:1.1.1'
+    annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
+    androidTestImplementation 'android.arch.persistence.room:testing:1.1.1'
+    // convert object from room to string
+    implementation 'com.google.code.gson:gson:2.8.2'
+    //Fire base
+    implementation 'com.google.firebase:firebase-core:16.0.8'
+    implementation 'com.google.firebase:firebase-firestore:18.2.0'
+
+    // Jar Files
+//    implementation files('C:/Hamami/Learn Programing/Android Studio/MusicTryWithMitch/libs/mail.jar')
+//    implementation files('C:/Hamami/Learn Programing/Android Studio/MusicTryWithMitch/libs/additionnal.jar')
+//    implementation files('C:/Hamami/Learn Programing/Android Studio/MusicTryWithMitch/libs/activation.jar')
+    implementation files('A:/Michael/Learn Programing/Android Studio/TheMusicApp/libs/activation.jar')
+    implementation files('A:/Michael/Learn Programing/Android Studio/TheMusicApp/libs/additionnal.jar')
+    implementation files('A:/Michael/Learn Programing/Android Studio/TheMusicApp/libs/mail.jar')
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+}
+//apply plugin: 'com.google.gms.google-services'
+

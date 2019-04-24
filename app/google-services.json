@@ -1,0 +1,85 @@
+{
+  "project_info": {
+    "project_number": "376497823784",
+    "firebase_url": "https://hamamimusic-1306c.firebaseio.com",
+    "project_id": "hamamimusic-1306c",
+    "storage_bucket": "hamamimusic-1306c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:376497823784:android:ecc0c990f7a24222",
+        "android_client_info": {
+          "package_name": "com.hamami.hamamimusicapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "376497823784-b177dfl38e9gftugvcok48f2d0l5uotq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hamami.hamamimusicapp",
+            "certificate_hash": "cbebe3321405c033429abb49a4ce17fbefac1954"
+          }
+        },
+        {
+          "client_id": "376497823784-6a30q10pmkouukl8lmh09gdrd89srusu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoOKyECFFiJk2JJupLGQRIsBa1YlMxkuo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "376497823784-6a30q10pmkouukl8lmh09gdrd89srusu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:376497823784:android:c67e3e5dd7fa1fed",
+        "android_client_info": {
+          "package_name": "com.hamami.musictrywithmitch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "376497823784-70m3d3c9ihjfovtitpq9qs64ec0s13vf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hamami.musictrywithmitch",
+            "certificate_hash": "cbebe3321405c033429abb49a4ce17fbefac1954"
+          }
+        },
+        {
+          "client_id": "376497823784-6a30q10pmkouukl8lmh09gdrd89srusu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoOKyECFFiJk2JJupLGQRIsBa1YlMxkuo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "376497823784-6a30q10pmkouukl8lmh09gdrd89srusu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

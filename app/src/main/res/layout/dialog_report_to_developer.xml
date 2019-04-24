@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    >
+
+    <LinearLayout
+        android:id="@+id/main_body"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Send Message to developer"
+            android:textSize="18sp"
+            android:textColor="#000"
+            android:id="@+id/report_heading"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Subject:"
+            android:textSize="18sp"
+            android:textColor="#000"
+            android:id="@+id/report_subject"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:textColor="#000"
+            android:hint="subject of mail"
+            android:gravity="start"
+            android:id="@+id/report_subject_input"/>
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Body:"
+            android:textSize="18sp"
+            android:textColor="#000"
+            android:id="@+id/report_body"/>
+
+        <EditText
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#000"
+            android:hint="Body of mail"
+            android:gravity="start"
+            android:id="@+id/report_body_input"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send"
+        android:layout_below="@id/main_body"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:textSize="18sp"
+        android:textColor="#33bbff"
+        android:id="@+id/report_action_send"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CANCEL"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/main_body"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="20dp"
+        android:textSize="18sp"
+        android:textColor="#33bbff"
+        android:id="@+id/report_action_cancel"/>
+
+
+
+</RelativeLayout>

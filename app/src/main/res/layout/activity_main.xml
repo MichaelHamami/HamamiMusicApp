@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
+
+    <RelativeLayout
+        android:id="@+id/main_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        tools:context=".MainActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize" >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/green"
+            app:popupTheme="@style/AppTheme.PopupOverlay" >
+
+        </androidx.appcompat.widget.Toolbar>
+
+
+        <!--<com.google.android.material.tabs.TabLayout-->
+            <!--android:id="@+id/tabLayout"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:tabGravity="fill"-->
+            <!--app:tabIndicatorColor="@color/green"-->
+            <!--app:tabIndicatorHeight="4dp"-->
+            <!--app:tabMode="scrollable"-->
+            <!--app:tabTextColor="@android:color/white" />-->
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+        <!--<androidx.viewpager.widget.ViewPager-->
+            <!--android:id="@+id/viewpager2"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="440dp"-->
+            <!--android:layout_above="@id/bottom_media_controller">-->
+        <!--</androidx.viewpager.widget.ViewPager>-->
+
+        <FrameLayout
+        android:id="@+id/main_container"
+        android:layout_width="match_parent"
+        android:layout_height="480dp"
+        android:layout_above="@id/bottom_media_controller">
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewpager_activity_main"
+                android:layout_marginTop="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </androidx.viewpager.widget.ViewPager>
+        </FrameLayout>
+
+        <fragment
+            android:id="@+id/bottom_media_controller"
+            android:name="com.hamami.hamamimusicapp.ui.MediaControllerFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            tools:layout="@layout/fragment_media_controller">
+
+        </fragment>
+
+
+    </RelativeLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_main">
+        <!--app:menu="@menu/activity_main_drawer"-->
+
+        <ExpandableListView
+            android:id="@+id/nav_expended"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/nav_header_height"
+            android:background="@color/grey"
+            android:dividerHeight="0dp" />
+
+    </com.google.android.material.navigation.NavigationView>
+
+
+</androidx.drawerlayout.widget.DrawerLayout>
