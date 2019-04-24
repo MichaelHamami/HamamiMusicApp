@@ -42,7 +42,7 @@ public interface IMainActivity {
 
     void shufflePlayingPlaylist(boolean isShuffle);
 
-    void setFirstShuffle();
+//    void setFirstShuffle();
 
 //    void  setupViewPager(ViewPager viewPager );
 

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
@@ -94,18 +93,14 @@ public class StorageFragment extends Fragment implements StorageRecyclerAdapter.
     public void showPopup(Item itemStorage, View view){
         PopupMenu popup = new PopupMenu(getContext(), view);
         popup.inflate(R.menu.storage_options_menu);
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
-        {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.setAsRoot:
-                        Log.d(TAG, "onMenuItemClick: set as root menu clicked ");
-                        mIMainActivity.setRootFolder(itemStorage.getFile());
-                        return true;
-                    default:
-                        return false;
-                }
+        popup.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.setAsRoot:
+                    Log.d(TAG, "onMenuItemClick: set as root menu clicked ");
+                    mIMainActivity.setRootFolder(itemStorage.getFile());
+                    return true;
+                default:
+                    return false;
             }
         });
         //displaying the popup

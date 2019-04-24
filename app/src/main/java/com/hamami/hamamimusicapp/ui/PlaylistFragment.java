@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.media.MediaMetadataCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -77,7 +76,8 @@ public static PlaylistFragment newInstance(Playlist playlist,boolean isPlaylistI
                 mPlaylistFragment = new Playlist(mPlaylistTitle,songsList);
                 mIsPlaylistInDatabase = getArguments().getBoolean("isPlaylistInDatabase");
 
-                if(mIsPlaylistInDatabase == false)
+                // mIsPlaylistInDatabase == false
+                if(!mIsPlaylistInDatabase)
                 {
                     savePlaylistToDatabase();
 
@@ -101,12 +101,9 @@ public static PlaylistFragment newInstance(Playlist playlist,boolean isPlaylistI
         initRecyclerView(view);
         mShuffle = view.findViewById(R.id.shuffle);
 //        mIMainActivity.setFirstShuffle();
-        mShuffle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mIMainActivity.shufflePlayingPlaylist(mShuffle.isActivated());
-                mShuffle.setActivated(!mShuffle.isActivated());
-            }
+        mShuffle.setOnClickListener(v -> {
+            mIMainActivity.shufflePlayingPlaylist(mShuffle.isActivated());
+            mShuffle.setActivated(!mShuffle.isActivated());
         });
 
 
@@ -181,35 +178,31 @@ public static PlaylistFragment newInstance(Playlist playlist,boolean isPlaylistI
     public void showPopup(final int postion, View view){
         PopupMenu popup = new PopupMenu(getContext(), view);
         popup.inflate(R.menu.options_menu);
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
-        {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.playMenu:
-                        Log.d(TAG, "onMenuItemClick: play menu clicked ");
-                        onMediaSelected(postion);
-                        return true;
-                    case R.id.deleteMenu:
-                        Log.d(TAG, "onMenuItemClick: delete menu  clicked ");
-                        deleteSongFromList(postion);
-                        return true;
-                    case R.id.addToPlaylistMenu:
-                        Log.d(TAG, "onMenuItemClick: add to playlist menu clicked song:"+songsList.get(postion).getNameSong());
-                        mIMainActivity.onAddPlaylistMenuSelected(songsList.get(postion));
-                        return true;
-                    case R.id.addAsFavorite:
-                        Log.d(TAG, "onMenuItemClick: add to Favorite menu  clicked ");
-                        mIMainActivity.addSongToPlaylist(songsList.get(postion),"Favorite");
-                        return true;
-                    case R.id.addToQueue:
-                        Log.d(TAG, "onMenuItemClick: Add to queue menu  clicked ");
-                        mIMainActivity.addSongToPlaylist(songsList.get(postion),"Queue");
-                        return true;
+        popup.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.playMenu:
+                    Log.d(TAG, "onMenuItemClick: play menu clicked ");
+                    onMediaSelected(postion);
+                    return true;
+                case R.id.deleteMenu:
+                    Log.d(TAG, "onMenuItemClick: delete menu  clicked ");
+                    deleteSongFromList(postion);
+                    return true;
+                case R.id.addToPlaylistMenu:
+                    Log.d(TAG, "onMenuItemClick: add to playlist menu clicked song:"+songsList.get(postion).getNameSong());
+                    mIMainActivity.onAddPlaylistMenuSelected(songsList.get(postion));
+                    return true;
+                case R.id.addAsFavorite:
+                    Log.d(TAG, "onMenuItemClick: add to Favorite menu  clicked ");
+                    mIMainActivity.addSongToPlaylist(songsList.get(postion),"Favorite");
+                    return true;
+                case R.id.addToQueue:
+                    Log.d(TAG, "onMenuItemClick: Add to queue menu  clicked ");
+                    mIMainActivity.addSongToPlaylist(songsList.get(postion),"Queue");
+                    return true;
 
-                    default:
-                        return false;
-                }
+                default:
+                    return false;
             }
         });
         //displaying the popup

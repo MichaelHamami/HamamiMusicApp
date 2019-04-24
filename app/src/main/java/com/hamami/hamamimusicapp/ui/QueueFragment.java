@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.media.MediaMetadataCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
@@ -189,30 +188,26 @@ public static QueueFragment newInstance(Playlist playlist){
     public void showPopup(final int postion, View view){
         PopupMenu popup = new PopupMenu(getContext(), view);
         popup.inflate(R.menu.queue_options_menu);
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
-        {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.playMenu:
-                        Toast.makeText(getContext(), "play menu clicked", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "onMenuItemClick: play menu clicked ");
-                        onMediaSelected(postion);
-                        return true;
-                    case R.id.deleteMenu:
-                        Log.d(TAG, "onMenuItemClick: delete menu  clicked ");
-                        Toast.makeText(getContext(), "delete menu  clicked", Toast.LENGTH_SHORT).show();
-                        deleteSongFromList(postion);
-                        return true;
-                    case R.id.addAsFavorite:
-                        Log.d(TAG, "onMenuItemClick: add to Favorite menu  clicked ");
-                        Toast.makeText(getContext(), "add to Favorite menu  clicked", Toast.LENGTH_SHORT).show();
-                        mIMainActivity.addSongToPlaylist(mSongsList.get(postion),"Favorite");
-                        return true;
+        popup.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.playMenu:
+                    Toast.makeText(getContext(), "play menu clicked", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "onMenuItemClick: play menu clicked ");
+                    onMediaSelected(postion);
+                    return true;
+                case R.id.deleteMenu:
+                    Log.d(TAG, "onMenuItemClick: delete menu  clicked ");
+                    Toast.makeText(getContext(), "delete menu  clicked", Toast.LENGTH_SHORT).show();
+                    deleteSongFromList(postion);
+                    return true;
+                case R.id.addAsFavorite:
+                    Log.d(TAG, "onMenuItemClick: add to Favorite menu  clicked ");
+                    Toast.makeText(getContext(), "add to Favorite menu  clicked", Toast.LENGTH_SHORT).show();
+                    mIMainActivity.addSongToPlaylist(mSongsList.get(postion),"Favorite");
+                    return true;
 
-                    default:
-                        return false;
-                }
+                default:
+                    return false;
             }
         });
         //displaying the popup

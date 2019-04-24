@@ -1,6 +1,7 @@
 package com.hamami.hamamimusicapp;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,7 +10,6 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.media.MediaMetadataRetriever;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -68,7 +68,7 @@ import static com.hamami.hamamimusicapp.util.Constants.QUEUE_NEW_PLAYLIST;
 import static com.hamami.hamamimusicapp.util.Constants.SEEK_BAR_MAX;
 import static com.hamami.hamamimusicapp.util.Constants.SEEK_BAR_PROGRESS;
 
-@SuppressWarnings("FieldCanBeLocal")
+@SuppressWarnings({"FieldCanBeLocal", "SpellCheckingInspection"})
 public class MainActivity extends AppCompatActivity implements
         IMainActivity,
         MediaBrowserHelperCallback {
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements
     // FOR NavigationView
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-    private String mActivityTitle;
+//    private String mActivityTitle;
 
     private ExpandableListView mExpandListView;
     private ExpandableListAdapter mExpandAdapter;
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements
     // Songs Vars
     ArrayList<Songs> songList = new ArrayList<>();
 
-    ArrayList<File> mySongs = new ArrayList<>();
+//    ArrayList<File> mySongs = new ArrayList<>();
     private ArrayList<MediaMetadataCompat> mMediaList = new ArrayList<>();
     private Songs songToAdd;
 
@@ -131,8 +131,8 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mToolbar = findViewById(R.id.toolbar);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mActivityTitle = getTitle().toString();
+        mDrawerLayout =  findViewById(R.id.drawer_layout);
+//        mActivityTitle = getTitle().toString();
         mExpandListView = findViewById(R.id.nav_expended);
 
         genData();
@@ -147,18 +147,14 @@ public class MainActivity extends AppCompatActivity implements
 
         new GetDataTask().execute();
 
-        final Observer<List<Playlist>> playlistObserver = new Observer<List<Playlist>>() {
-            @Override
-            public void onChanged(List<Playlist> playlists)
-            {
-                Log.d(TAG, "onChanged: called LiveData Work : FromDataBase");
-                mPlaylists.clear();
-                mPlaylists.addAll(playlists);
+        final Observer<List<Playlist>> playlistObserver = playlists -> {
+            Log.d(TAG, "onChanged: called LiveData Work : FromDataBase");
+            mPlaylists.clear();
+            mPlaylists.addAll(playlists);
 
-                if(mPlaylists.size() != mViewPagerAdapterActivity.getCount() || mPlaylists.size() == 0 )
-                {
-                    addTheFragmentsFromDataBase();
-                }
+            if(mPlaylists.size() != mViewPagerAdapterActivity.getCount() || mPlaylists.size() == 0 )
+            {
+                addTheFragmentsFromDataBase();
             }
         };
         mPlaylistRepository.retrievePlaylistsTask().observe(this,playlistObserver);
@@ -194,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements
     private void doFragmentTransaction(Fragment fragment, String tag, boolean addToBackStack){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        // if Viewpager is Unvisible and we change to Main Fragment that include that pager
+        // if Viewpager is Un visible and we change to Main Fragment that include that pager
         if(tag.equalsIgnoreCase(getString(R.string.fragment_main)) && mViewPagerActivity.getVisibility() != View.VISIBLE)
         {
             Log.d(TAG, "doFragmentTransaction: setVisible");
@@ -229,62 +225,44 @@ public class MainActivity extends AppCompatActivity implements
     private void addDrawerItem() {
         mExpandAdapter = new CustomExpandableListView(this,lstTitle,lstChild);
         mExpandListView.setAdapter(mExpandAdapter);
-        mExpandListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v,
-                                        int groupPosition, long id) {
-                return false;
-            }
-        });
+        mExpandListView.setOnGroupClickListener((parent, v, groupPosition, id) -> false);
         // Listview Group expanded listener
-        mExpandListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-
-            @Override
-            public void onGroupExpand(int groupPosition) {
-            }
+        mExpandListView.setOnGroupExpandListener(groupPosition -> {
         });
 
         // Listview Group collasped listener
-        mExpandListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-            }
+        mExpandListView.setOnGroupCollapseListener(groupPosition -> {
         });
-        mExpandListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                String selectedItem = lstChild.get(lstTitle.get(groupPosition)).get(childPosition).toString();
-                Toast.makeText(getApplicationContext(),
-                        selectedItem + " clicked",
-                        Toast.LENGTH_SHORT).show();
-                if(selectedItem.equalsIgnoreCase("Report to Developer"))
-                {
-                    Log.d(TAG, "onChildClick: we try to openDialog");
-                    DialogReportToDeveloper dialog = new DialogReportToDeveloper();
-                    dialog.show(getSupportFragmentManager(),"DialogReportToDeveloper");
+        mExpandListView.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> {
+            String selectedItem = lstChild.get(lstTitle.get(groupPosition)).get(childPosition);
+            Toast.makeText(getApplicationContext(),
+                    selectedItem + " clicked",
+                    Toast.LENGTH_SHORT).show();
+            if(selectedItem.equalsIgnoreCase("Report to Developer"))
+            {
+                Log.d(TAG, "onChildClick: we try to openDialog");
+                DialogReportToDeveloper dialog = new DialogReportToDeveloper();
+                dialog.show(getSupportFragmentManager(),"DialogReportToDeveloper");
 
-                }
-                else if(selectedItem.equalsIgnoreCase("about"))
-                {
-                    // todo people can stack it how many they want.....
-                    Log.d(TAG, "onChildClick: click on about");
-                    doFragmentTransaction(new AboutFragment(),"about",true);
-                }
-                else if(selectedItem.equalsIgnoreCase("Change Music Folder"))
-                {
-                    Log.d(TAG, "onChildClick: click on Change Music Folder");
-                    doFragmentTransaction(new StorageFragment(),"storage",true);
-                }
-                else if(selectedItem.equalsIgnoreCase("info"))
-                {
-                    Log.d(TAG, "onChildClick: click on info");
-                    doFragmentTransaction(new InformationFromDeveloperFragment(),"info",true);
-                }
-                mDrawerLayout.closeDrawer(GravityCompat.START);
-                return false;
             }
+            else if(selectedItem.equalsIgnoreCase("about"))
+            {
+                // todo people can stack it how many they want.....
+                Log.d(TAG, "onChildClick: click on about");
+                doFragmentTransaction(new AboutFragment(),"about",true);
+            }
+            else if(selectedItem.equalsIgnoreCase("Change Music Folder"))
+            {
+                Log.d(TAG, "onChildClick: click on Change Music Folder");
+                doFragmentTransaction(new StorageFragment(),"storage",true);
+            }
+            else if(selectedItem.equalsIgnoreCase("info"))
+            {
+                Log.d(TAG, "onChildClick: click on info");
+                doFragmentTransaction(new InformationFromDeveloperFragment(),"info",true);
+            }
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+            return false;
         });
     }
     private void setupDrawer()
@@ -343,7 +321,8 @@ public class MainActivity extends AppCompatActivity implements
                     foundTitle = true;
                 }
             }
-            if(foundTitle != true)
+            // foundTitle != true
+            if(!foundTitle)
             {
                 mViewPagerAdapterActivity.addFragment(PlaylistFragment.newInstance(mPlaylists.get(i),true),mPlaylists.get(i).getTitle());
             }
@@ -398,7 +377,7 @@ public class MainActivity extends AppCompatActivity implements
 
         if(mPlaylists.size() != 0)
         {
-            boolean foundTitle = false;
+//            boolean foundTitle = false;
             Log.d(TAG, "setupViewPager: We get playlist's from Database Size is:"+mPlaylists.size());
             for(int i = 0; i < mPlaylists.size();i++)
             {
@@ -504,7 +483,8 @@ public class MainActivity extends AppCompatActivity implements
     public void shufflePlayingPlaylist(boolean isShuffle)
     {
         Log.d(TAG, "shufflePlayingPlaylist: called we shuffle");
-        if (isShuffle == true)
+        // isShuffle == true
+        if (isShuffle)
         {
             mMediaBrowserHelper.getTransportControls().setShuffleMode(PlaybackStateCompat.SHUFFLE_MODE_NONE);
         }
@@ -514,11 +494,11 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    @Override
-    public void setFirstShuffle()
-    {
-        mMediaBrowserHelper.getTransportControls().setShuffleMode(PlaybackStateCompat.SHUFFLE_MODE_NONE);
-    }
+//    @Override
+//    public void setFirstShuffle()
+//    {
+//        mMediaBrowserHelper.getTransportControls().setShuffleMode(PlaybackStateCompat.SHUFFLE_MODE_NONE);
+//    }
 
     @Override
     public void playPause()
@@ -665,13 +645,13 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onAddPlaylistMenuSelected(Songs songSelected)
     {
-        Log.d(TAG, "onAddPlaylistMenuSelected: Called with Song: SongName: "+songSelected.getNameSong()+" | Song FilePath: "+songSelected.getFileSong().toString());
+        Log.d(TAG, "onAddPlaylistMenuSelected: Called with Song: SongName: "+songSelected.getNameSong()+" | Song FilePath: "+songSelected.getFileSong());
         MainFragment mainFragment = (MainFragment)getSupportFragmentManager().findFragmentByTag(getString(R.string.fragment_main));
         ViewPager viewPagerMain = mainFragment.getViewPager();
         ViewPagerAdapter viewPagerAdapterMain = (ViewPagerAdapter)viewPagerMain.getAdapter();
 
         songToAdd = songSelected;
-        Log.d(TAG, "onAddPlaylistMenuSelected: Song: SongName: "+songToAdd.getNameSong()+" | Song FilePath: "+songToAdd.getFileSong().toString());
+        Log.d(TAG, "onAddPlaylistMenuSelected: Song: SongName: "+songToAdd.getNameSong()+" | Song FilePath: "+songToAdd.getFileSong());
 
         Bundle bundle = new Bundle();
         ArrayList<String> fragmentTitles = viewPagerAdapterMain.getFragmentTitles();
@@ -690,7 +670,7 @@ public class MainActivity extends AppCompatActivity implements
     public void addSongToPlaylist(Songs song, String playlistTitle) {
         MainFragment mainFragment = (MainFragment)getSupportFragmentManager().findFragmentByTag(getString(R.string.fragment_main));
         ViewPager viewPagerLoc = mainFragment.getViewPager();
-        TabLayout tabLayout = mainFragment.getTabLayout();
+//        TabLayout tabLayout = mainFragment.getTabLayout();
         ViewPagerAdapter viewPagerAdapterMain = (ViewPagerAdapter)viewPagerLoc.getAdapter();
 
 //        int position = viewPagerAdapterMain.getItemPositionByTitle(playlistTitle);
@@ -761,11 +741,12 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void insertToDatabase(Playlist playlist)
     {
-        ArrayList<String> playlistTitles = new ArrayList<>();
+//        ArrayList<String> playlistTitles = new ArrayList<>();
 //        playlistTitles.addAll(mPlaylistRepository.getPlaylistTitles());
         Log.d(TAG, "savePlaylistToDatabase: we try to save the playlist to the database");
         Log.d(TAG, "savePlaylistToDatabase: Title: "+playlist.getTitle()+" Songs size: "+playlist.getSongs().size());
-        if( isThisNewPlaylist(playlist,playlistTitles) == true)
+        // isThisNewPlaylist(playlist,playlistTitles) == true
+        if(isThisNewPlaylist(playlist))
         {
             Log.d(TAG, "insertToDatabase: we insert new Playlist");
             mPlaylistRepository.insertPlaylistTask(playlist);
@@ -873,7 +854,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private Playlist retrivePlaylistFromStorage()
     {
-        ArrayList<File> songsFiles = new ArrayList<>();
+        ArrayList<File> songsFiles;
 //        songsFiles =  findSongs(Environment.getExternalStorageDirectory());
         if(mMyPrefManager.getLastRootMediaFolder().equals(""))
         {
@@ -899,7 +880,7 @@ public class MainActivity extends AppCompatActivity implements
 
 
     public ArrayList<File> findSongs(File root) {
-        ArrayList<File> al = new ArrayList<File>();
+        ArrayList<File> al = new ArrayList<>();
         File[] files = root.listFiles();
         for (File singleFile : files) {
             if (singleFile.isDirectory() && !singleFile.isHidden()) {
@@ -1057,7 +1038,7 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    public boolean isThisNewPlaylist(Playlist playlist,ArrayList<String> titles)
+    public boolean isThisNewPlaylist(Playlist playlist)
     {
         Log.d(TAG, "isThisNewPlaylist: for checks size:" +mPlaylists.size());
         for(int i = 0; i<mPlaylists.size(); i++)
@@ -1068,29 +1049,13 @@ public class MainActivity extends AppCompatActivity implements
             }
         }
         return true;
-//        for(int i = 0; i<titles.size(); i++)
-//        {
-//            if(titles.get(i).equals(playlist.getTitle()))
-//            {
-//                return false;
-//            }
-//        }
-//        return true;
     }
-    public void composeEmail(String[] addresses, String subject) {
-        Log.d(TAG, "composeEmail: called");
-        Intent intent = new Intent(Intent.ACTION_SENDTO);
-        intent.setData(Uri.parse("mailto:hamami2010@gmail.com")); // only email apps should handle this
-//        intent.putExtra(Intent.EXTRA_EMAIL, addresses);
-        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
-        }
-    }
+
 
     /**
      * Creating Get Data Task for Getting Data From Web
      */
+    @SuppressLint("StaticFieldLeak")
     public  class  GetDataTask extends AsyncTask<Void, Void, Void> {
 
         ProgressDialog dialog;

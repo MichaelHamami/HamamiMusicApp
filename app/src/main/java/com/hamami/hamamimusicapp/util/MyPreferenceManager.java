@@ -79,7 +79,7 @@ public class MyPreferenceManager {
 
     public void saveLastRootMediaFolder(File root){
         SharedPreferences.Editor editor = mPreferences.edit();
-        editor.putString(MUSIC_ROOT_FOLDER, root.getAbsolutePath().toString());
+        editor.putString(MUSIC_ROOT_FOLDER, root.getAbsolutePath());
         editor.apply();
     }
 

@@ -71,22 +71,16 @@ public class DialogReportToDeveloper extends AppCompatDialogFragment {
         mInputSubject = view.findViewById(R.id.report_subject_input);
 
 
-        mActionCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: Cancel clicked Closing dialog");
-                getDialog().dismiss();
-            }
+        mActionCancel.setOnClickListener(v -> {
+            Log.d(TAG, "onClick: Cancel clicked Closing dialog");
+            getDialog().dismiss();
         });
 
-        mActionOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick:  send Clicked : capturing input");
-                String inputSubject = mInputSubject.getText().toString();
-                String inputBody = mInputBody.getText().toString();
-                    checkInput(inputSubject,inputBody);
-            }
+        mActionOk.setOnClickListener(v -> {
+            Log.d(TAG, "onClick:  send Clicked : capturing input");
+            String inputSubject = mInputSubject.getText().toString();
+            String inputBody = mInputBody.getText().toString();
+                checkInput(inputSubject,inputBody);
         });
         return view;
     }

@@ -277,7 +277,8 @@ public class MediaService extends MediaBrowserServiceCompat
 
 
             }
-            if(mIsShuffle == false)
+            // mIsShuffle == false
+            if(!mIsShuffle)
             {
                 mQueueIndex = (++mQueueIndex % mPlaylist.size());
             }
@@ -336,23 +337,37 @@ public class MediaService extends MediaBrowserServiceCompat
             mSession.setPlaybackState(state);
 
             // manage the started state of this service.
-            switch (state.getState())
-            {
-                case PlaybackStateCompat.STATE_PLAYING:
-                {
+            switch (state.getState()) {
+                case PlaybackStateCompat.STATE_PLAYING: {
                     mServiceManager.displayNotification(state);
                     break;
                 }
-                case PlaybackStateCompat.STATE_PAUSED:
-                {
+                case PlaybackStateCompat.STATE_PAUSED: {
                     mServiceManager.displayNotification(state);
                     break;
                 }
-                case PlaybackStateCompat.STATE_STOPPED:
-                {
+                case PlaybackStateCompat.STATE_STOPPED: {
                     mServiceManager.moveServiceOutOfStartedState();
                     break;
                 }
+                case PlaybackStateCompat.STATE_BUFFERING:
+                    break;
+                case PlaybackStateCompat.STATE_CONNECTING:
+                    break;
+                case PlaybackStateCompat.STATE_ERROR:
+                    break;
+                case PlaybackStateCompat.STATE_FAST_FORWARDING:
+                    break;
+                case PlaybackStateCompat.STATE_NONE:
+                    break;
+                case PlaybackStateCompat.STATE_REWINDING:
+                    break;
+                case PlaybackStateCompat.STATE_SKIPPING_TO_NEXT:
+                    break;
+                case PlaybackStateCompat.STATE_SKIPPING_TO_PREVIOUS:
+                    break;
+                case PlaybackStateCompat.STATE_SKIPPING_TO_QUEUE_ITEM:
+                    break;
             }
         }
 
@@ -380,35 +395,51 @@ public class MediaService extends MediaBrowserServiceCompat
             public void displayNotification(PlaybackStateCompat state)
             {
                 mState = state;
-                Notification notification = null;
-                switch (state.getState())
-                {
-                    case PlaybackStateCompat.STATE_PLAYING:
-                    {
+                Notification notification;
+                switch (state.getState()) {
+                    case PlaybackStateCompat.STATE_PLAYING: {
                         notification = mMediaNotificationManager.buildNotification(
-                                state,getSessionToken(),mPlayback.getCurrentMedia().getDescription(),null);
-                        if(!mIsServiceStarted)
-                        {
+                                state, getSessionToken(), mPlayback.getCurrentMedia().getDescription(), null);
+                        if (!mIsServiceStarted) {
                             ContextCompat.startForegroundService(MediaService.this,
-                                    new Intent(MediaService.this,MediaService.class));
+                                    new Intent(MediaService.this, MediaService.class));
                             mIsServiceStarted = true;
                         }
 
-                        startForeground(MediaNotificationManager.NOTIFICATION_ID,notification);
+                        startForeground(MediaNotificationManager.NOTIFICATION_ID, notification);
                         break;
                     }
 
-                    case PlaybackStateCompat.STATE_PAUSED:
-                    {
+                    case PlaybackStateCompat.STATE_PAUSED: {
                         //Make us can swap the notification to remove it
                         stopForeground(false);
 
                         notification = mMediaNotificationManager.buildNotification(
-                                state,getSessionToken(),mPlayback.getCurrentMedia().getDescription(),null);
+                                state, getSessionToken(), mPlayback.getCurrentMedia().getDescription(), null);
 
-                        mMediaNotificationManager.getNotificationManager().notify(MediaNotificationManager.NOTIFICATION_ID,notification);
+                        mMediaNotificationManager.getNotificationManager().notify(MediaNotificationManager.NOTIFICATION_ID, notification);
                         break;
                     }
+                    case PlaybackStateCompat.STATE_BUFFERING:
+                        break;
+                    case PlaybackStateCompat.STATE_CONNECTING:
+                        break;
+                    case PlaybackStateCompat.STATE_ERROR:
+                        break;
+                    case PlaybackStateCompat.STATE_FAST_FORWARDING:
+                        break;
+                    case PlaybackStateCompat.STATE_NONE:
+                        break;
+                    case PlaybackStateCompat.STATE_REWINDING:
+                        break;
+                    case PlaybackStateCompat.STATE_SKIPPING_TO_NEXT:
+                        break;
+                    case PlaybackStateCompat.STATE_SKIPPING_TO_PREVIOUS:
+                        break;
+                    case PlaybackStateCompat.STATE_SKIPPING_TO_QUEUE_ITEM:
+                        break;
+                    case PlaybackStateCompat.STATE_STOPPED:
+                        break;
                 }
             }
             private void moveServiceOutOfStartedState()

@@ -11,6 +11,7 @@ import com.hamami.hamamimusicapp.Models.Playlist;
 
 import java.util.List;
 
+@SuppressWarnings("UnusedReturnValue")
 @Dao
 public interface PlaylistDao {
 

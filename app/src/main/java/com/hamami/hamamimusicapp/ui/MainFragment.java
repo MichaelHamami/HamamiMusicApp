@@ -156,7 +156,7 @@ public class MainFragment extends Fragment {
 
     private Playlist retrivePlaylistFromStorage()
     {
-        ArrayList<File> songsFiles = new ArrayList<>();
+        ArrayList<File> songsFiles;
 //        songsFiles =  findSongs(Environment.getExternalStorageDirectory());
         songsFiles =  findSongs(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC));
         ArrayList<Songs> songsList = new ArrayList<>();
@@ -173,7 +173,7 @@ public class MainFragment extends Fragment {
     }
 
     public ArrayList<File> findSongs(File root) {
-        ArrayList<File> al = new ArrayList<File>();
+        ArrayList<File> al = new ArrayList<>();
         File[] files = root.listFiles();
         for (File singleFile : files) {
             if (singleFile.isDirectory() && !singleFile.isHidden()) {

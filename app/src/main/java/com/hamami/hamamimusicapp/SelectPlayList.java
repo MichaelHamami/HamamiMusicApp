@@ -53,13 +53,9 @@ public class SelectPlayList extends Fragment implements SelectPlaylistRecyclerAd
 //        mRecyclerView = view.findViewById(R.id.reycler_view_selectPlaylist);
         mButtonCreate = view.findViewById(R.id.ButtonCreateNewPlaylist);
 
-        mButtonCreate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                Log.d(TAG, "onClick: Called: opening dialog");
-                openDialog();
-            }
+        mButtonCreate.setOnClickListener(v -> {
+            Log.d(TAG, "onClick: Called: opening dialog");
+            openDialog();
         });
     }
 

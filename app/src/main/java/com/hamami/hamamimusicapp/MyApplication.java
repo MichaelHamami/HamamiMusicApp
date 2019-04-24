@@ -1,15 +1,15 @@
 package com.hamami.hamamimusicapp;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaMetadataCompat;
-import android.support.v4.media.session.MediaSessionCompat;
 import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
+@SuppressLint("Registered")
 public class MyApplication extends Application {
 
     private static final String TAG = "MyApplication";
@@ -74,17 +74,17 @@ public class MyApplication extends Application {
             }
         }
     }
-    public ArrayList<MediaSessionCompat.QueueItem> getQueueItems()
-    {
-        ArrayList<MediaSessionCompat.QueueItem> queueItemArrayList = new ArrayList<>();
-        for (int i= 0; i<mMediaItems.size();i++)
-        {
-            MediaMetadataCompat mediaMetadataCompat = mTreeMap.get(mMediaItems.get(i));
-            MediaSessionCompat.QueueItem queueItem = new MediaSessionCompat.QueueItem(mediaMetadataCompat.getDescription(),mediaMetadataCompat.getDescription().hashCode());
-            queueItemArrayList.add(queueItem);
-        }
-
-        return queueItemArrayList;
-    }
+//    public ArrayList<MediaSessionCompat.QueueItem> getQueueItems()
+//    {
+//        ArrayList<MediaSessionCompat.QueueItem> queueItemArrayList = new ArrayList<>();
+//        for (int i= 0; i<mMediaItems.size();i++)
+//        {
+//            MediaMetadataCompat mediaMetadataCompat = mTreeMap.get(mMediaItems.get(i));
+//            MediaSessionCompat.QueueItem queueItem = new MediaSessionCompat.QueueItem(mediaMetadataCompat.getDescription(),mediaMetadataCompat.getDescription().hashCode());
+//            queueItemArrayList.add(queueItem);
+//        }
+//
+//        return queueItemArrayList;
+//    }
 
 }

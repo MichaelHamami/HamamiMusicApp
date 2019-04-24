@@ -41,21 +41,15 @@ public class DialogCreateNewPlaylist extends AppCompatDialogFragment {
         mActionOk = view.findViewById(R.id.action_ok);
         mInput = view.findViewById(R.id.dialog_new_playlist_input);
 
-        mActionCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: Cancel clicked Closing dialog");
-                getDialog().dismiss();
-            }
+        mActionCancel.setOnClickListener(v -> {
+            Log.d(TAG, "onClick: Cancel clicked Closing dialog");
+            getDialog().dismiss();
         });
 
-        mActionOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick:  Ok Clicked : capturing input: "+mInput.getText().toString());
-                String input = mInput.getText().toString();
-                    checkInput(input);
-            }
+        mActionOk.setOnClickListener(v -> {
+            Log.d(TAG, "onClick:  Ok Clicked : capturing input: "+mInput.getText().toString());
+            String input = mInput.getText().toString();
+                checkInput(input);
         });
         return view;
     }
@@ -72,7 +66,8 @@ public class DialogCreateNewPlaylist extends AppCompatDialogFragment {
             Log.d(TAG, "The String is null? input: " +input);
             Toast.makeText(getContext(), "Please Enter playlist Name", Toast.LENGTH_SHORT).show();
         }
-        else if( isPlaylistAlreadyExists(input) == true )
+        // isPlaylistAlreadyExists(input) == true
+        else if(isPlaylistAlreadyExists(input))
         {
             Log.d(TAG, "The playlist name already exists. input: " +input);
             Toast.makeText(getContext(), "Please Enter playlist Name that is not already exist", Toast.LENGTH_SHORT).show();

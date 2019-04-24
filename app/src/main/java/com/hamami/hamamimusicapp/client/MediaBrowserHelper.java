@@ -8,10 +8,8 @@ import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.media.MediaBrowserServiceCompat;
-
 import com.hamami.hamamimusicapp.util.MyPreferenceManager;
 
 import java.util.ArrayList;
@@ -100,6 +98,7 @@ public class MediaBrowserHelper {
         Log.d(TAG, "removeQueueItemFromPlaylist: Called we call controller to remove");
         mMediaController.removeQueueItem(mediaId.getDescription());
     }
+
     public void setQueueIndex(int index) {
         Log.d(TAG, "setQueueIndex: called we actully called rewind");
         mMediaController.getTransportControls().rewind();

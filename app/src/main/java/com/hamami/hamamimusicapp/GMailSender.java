@@ -1,23 +1,20 @@
 package com.hamami.hamamimusicapp;
 
-
 import android.util.Log;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.Security;
 import java.util.Properties;
-
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
+@SuppressWarnings({"FieldCanBeLocal", "SpellCheckingInspection"})
 public class GMailSender extends javax.mail.Authenticator {
     private String mailhost = "smtp.gmail.com";
     private String user;
@@ -50,7 +47,7 @@ public class GMailSender extends javax.mail.Authenticator {
         return new PasswordAuthentication(user, password);
     }
 
-    public synchronized void sendMail(String subject, String body, String sender, String recipients) throws Exception {
+    public synchronized void sendMail(String subject, String body, String sender, String recipients) {
         try{
             MimeMessage message = new MimeMessage(session);
             DataHandler handler = new DataHandler(new ByteArrayDataSource(body.getBytes(), "text/plain"));
@@ -71,20 +68,20 @@ public class GMailSender extends javax.mail.Authenticator {
         private byte[] data;
         private String type;
 
-        public ByteArrayDataSource(byte[] data, String type) {
+        private ByteArrayDataSource(byte[] data, String type) {
             super();
             this.data = data;
             this.type = type;
         }
 
-        public ByteArrayDataSource(byte[] data) {
-            super();
-            this.data = data;
-        }
+//        public ByteArrayDataSource(byte[] data) {
+//            super();
+//            this.data = data;
+//        }
 
-        public void setType(String type) {
-            this.type = type;
-        }
+//        public void setType(String type) {
+//            this.type = type;
+//        }
 
         public String getContentType() {
             if (type == null)
@@ -93,7 +90,7 @@ public class GMailSender extends javax.mail.Authenticator {
                 return type;
         }
 
-        public InputStream getInputStream() throws IOException {
+        public InputStream getInputStream() {
             return new ByteArrayInputStream(data);
         }
 
