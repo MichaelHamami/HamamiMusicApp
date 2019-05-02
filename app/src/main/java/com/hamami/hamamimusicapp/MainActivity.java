@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements
     private void genData() {
         List<String> title = Arrays.asList("Features " , "Help","About");
         List<String> childsFeature = Arrays.asList("Settings","Change Music Folder");
-        List<String> childsHelp = Arrays.asList("Report to Developer","How to use the app");
+        List<String> childsHelp = Arrays.asList("User Guide","Report to Developer","How to use the app");
         List<String> childsAbout = Arrays.asList("About","Info");
 
         lstChild = new TreeMap<>();
